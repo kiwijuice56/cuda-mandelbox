@@ -1,5 +1,7 @@
 #include "mandelbox.cuh"
 
+// DE algorithm from http://blog.hvidtfeldts.net/index.php/2011/11/distance-estimated-3d-fractals-vi-the-mandelbox/
+
 __device__ double mandelbox::distance(double x, double y, double z) {
     double oX = x, oY = y, oZ = z;
     double *zX = &x, *zY = &y, *zZ = &z;
