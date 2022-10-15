@@ -4,7 +4,7 @@ and only supports the mandelbox and primitives.
 
 ![Demo Image](out.png)
 
-## Attribution
+## Attribution and Dependencies
 The program uses the stb_image_write header file (from https://github.com/nothings/stb) 
-to save renders as images. It is included in the repository for
-ease of use because it is under the MIT license, but I did not develop it.
+to save renders as images. You must download the file and place it in the `main` directory
+to run the program.
