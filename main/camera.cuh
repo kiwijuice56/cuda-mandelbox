@@ -17,9 +17,9 @@ private:
     const double FOV = 0.994;
     const double CANVAS_OFFSET = 0.005;
     const double MAX_DISTANCE = 6000;
-    const int MAX_ITER = 512;
-    const double THRESHOLD = 0.01;
-    const double WORLD_SIZE = 360.0;
+    const int MAX_ITER = 256;
+    const double THRESHOLD = 0.001;
+    const double WORLD_SIZE = 900.0;
     const char *OUT_PATH = R"(C:\Users\Eric Alfaro\CLionProjects\raymarcher_fractals_gpu\out.png)";
 };
 

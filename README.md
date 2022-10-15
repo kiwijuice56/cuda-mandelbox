@@ -2,7 +2,8 @@
 Ray marcher implementation to render fractals in c++ with CUDA. This program is currently in development
 and only supports the Mandelbox and primitives.
 
-![Demo Image](out.png)
+![Demo Image 1](out2.png)
+![Demo Image 2](out.png)
 
 ## Attribution and Dependencies
 The program uses the stb_image_write header file (from https://github.com/nothings/stb) 

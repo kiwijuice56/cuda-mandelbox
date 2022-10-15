@@ -17,7 +17,7 @@ __global__ static void cast_ray(unsigned char *pixels, mandelbox s,
     double pxY = (row / HEIGHT) * VIEW_HEIGHT - (VIEW_HEIGHT / 2);
 
     // Start at the camera position; arbitrary, but must be outside of object for best results
-    double rayPX = 0.0, rayPY = 0.0, rayPZ = -240;
+    double rayPX = 0, rayPY = 0, rayPZ = -600;
     double rayDX = pxX, rayDY = pxY, rayDZ = CANVAS_OFFSET;
     double raySize = sqrt(rayDX*rayDX + rayDY*rayDY + rayDZ*rayDZ);
 
@@ -43,13 +43,13 @@ __global__ static void cast_ray(unsigned char *pixels, mandelbox s,
         // Color the pixel when the ray is close enough and break
         if (abs(distance) < THRESHOLD) {
             double complexity = 1.0 - (i / (double) MAX_ITER);
-            double distance_fade = 1.0 - totalDistance / MAX_DISTANCE;
+            double distance_fade = 1.0 - pow(totalDistance / MAX_DISTANCE, 2);
 
             double baseColor = complexity * distance_fade;
             int p = (int) (row * 4 * WIDTH + 4 * col);
+            pixels[p++] = (unsigned char) (255 * 0.25 * baseColor);
+            pixels[p++] = (unsigned char) (255 * 0.85 * baseColor);
             pixels[p++] = (unsigned char) (255 * 1.0 * baseColor);
-            pixels[p++] = (unsigned char) (255 * 0.25 * baseColor);
-            pixels[p++] = (unsigned char) (255 * 0.25 * baseColor);
             pixels[p++] = 255;
             return;
         }
