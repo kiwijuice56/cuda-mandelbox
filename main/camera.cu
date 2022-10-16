@@ -110,7 +110,7 @@ __host__ void camera::render() const {
 
     // Create threads
     cast_ray<<<4096, 1024>>>(pixels, shape, VIEW_WIDTH, VIEW_HEIGHT, WIDTH, HEIGHT, CANVAS_OFFSET,
-                             0, 0, -4,
+                             1.25, -2, -2.25,
                              MAX_DISTANCE, MAX_ITER, THRESHOLD, WORLD_SIZE);
     cudaDeviceSynchronize();
 

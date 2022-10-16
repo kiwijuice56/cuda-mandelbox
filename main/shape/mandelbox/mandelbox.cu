@@ -13,11 +13,11 @@ __device__ double mandelbox::distance(double x, double y, double z) {
         boxFold(zX, zY, zZ);
         sphereFold(zX, zY, zZ, dr);
 
-        *zX = -1.95  * *zX + oX;
-        *zY = -1.95  * *zY + oY;
-        *zZ = -1.95  * *zZ + oZ;
+        *zX = 2 * *zX + oX;
+        *zY = 2 * *zY + oY;
+        *zZ = 2 * *zZ + oZ;
 
-        *dr = *dr * 1.95  + 1.0;
+        *dr = *dr * 2 + 1.0;
     }
     double r = sqrt(*zX * *zX + *zY * *zY + *zZ * *zZ);
     return r / abs(*dr);
@@ -48,7 +48,7 @@ __device__ void mandelbox::sphereFold(double *x, double *y, double *z, double *d
 }
 
 __device__ void mandelbox::boxFold(double *x, double *y, double *z) {
-    *x = min(.5, max(*x, -.5)) * 2.0 - *x;
-    *y = min(.5, max(*y, -.5)) * 2.0 - *y;
-    *z = min(.5, max(*z, -.5)) * 2.0 - *z;
+    *x = min(.314159265359, max(*x, -.314159265359)) * 2.0 - *x;
+    *y = min(.314159265359, max(*y, -.314159265359)) * 2.0 - *y;
+    *z = min(.314159265359, max(*z, -.314159265359)) * 2.0 - *z;
 }
