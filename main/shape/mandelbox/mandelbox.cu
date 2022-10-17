@@ -48,7 +48,7 @@ __device__ void mandelbox::sphereFold(double *x, double *y, double *z, double *d
 }
 
 __device__ void mandelbox::boxFold(double *x, double *y, double *z) {
-    *x = min(.314159265359, max(*x, -.314159265359)) * 2.0 - *x;
-    *y = min(.314159265359, max(*y, -.314159265359)) * 2.0 - *y;
-    *z = min(.314159265359, max(*z, -.314159265359)) * 2.0 - *z;
+    *x = min(.5, max(*x, -.5)) * 2.0 - *x;
+    *y = min(.5, max(*y, -.5)) * 2.0 - *y;
+    *z = min(.5, max(*z, -.5)) * 2.0 - *z;
 }

@@ -5,7 +5,7 @@ and only supports the Mandelbox and primitives.
 ![Demo Image 1](out4.png)
 ![Demo Image 2](out2.png)
 ![Demo Image 3](out5.png)
-![Demo Image 4](out.png)
+![Demo Image 4](out6.png)
 ![Demo Image 5](out3.png)
 
 ## Attribution and Dependencies

@@ -14,8 +14,6 @@ __global__ static void cast_ray(unsigned char *pixels, mandelbox s,
     unsigned int row = (ord / (int) WIDTH);
     unsigned int col = (ord % (int) HEIGHT);
 
-    const double e = 0.001;
-
     double pxX = (col / WIDTH) * VIEW_WIDTH - (VIEW_WIDTH / 2);
     double pxY = (row / HEIGHT) * VIEW_HEIGHT - (VIEW_HEIGHT / 2);
 
@@ -33,9 +31,9 @@ __global__ static void cast_ray(unsigned char *pixels, mandelbox s,
     double distance, totalDistance = 0;
     for (int i = 0; i < MAX_ITER; i++) {
         // Loops the world space
-        rayPX = remainder(rayPX, WORLD_SIZE);
-        rayPY = remainder(rayPY, WORLD_SIZE);
-        rayPZ = remainder(rayPZ, WORLD_SIZE);
+        // rayPX = remainder(rayPX, WORLD_SIZE);
+        // rayPY = remainder(rayPY, WORLD_SIZE);
+        // rayPZ = remainder(rayPZ, WORLD_SIZE);
 
         distance = s.distance(rayPX, rayPY, rayPZ);
         totalDistance += distance;
@@ -45,36 +43,14 @@ __global__ static void cast_ray(unsigned char *pixels, mandelbox s,
 
         // Color the pixel when the ray is close enough and break
         if (abs(distance) < THRESHOLD) {
-/*
-            double nX = (s.distance(rayPX + e, rayPY, rayPZ) - distance) / e;
-            double nY = (s.distance(rayPX, rayPY + e, rayPZ) - distance) / e;
-            double nZ = (s.distance(rayPX, rayPY, rayPZ + e) - distance) / e;
-
-            double size = sqrt(nX*nX + nY*nY + nZ*nZ);
-
-            nX /= size;
-            nY /= size;
-            nZ /= size;
-
-            double lPX = nX+32, lPY = nY-32.0, lPZ = nZ-32 ;
-
-            double lPSize = sqrt(lPX*lPX + lPY*lPY + lPZ*lPZ);
-
-            lPX /= lPSize;
-            lPY /= lPSize;
-            lPZ /= lPSize;
-
-            double dot = 0  + lPY * -1.0 + 0 ;
-            dot = ((dot + 1) / 2);*/
-
             double complexity = 1.0 - (i / (double) MAX_ITER);
             double distance_fade = 1.0 - pow(totalDistance / MAX_DISTANCE, 2);
 
-            double baseColor = complexity * distance_fade;
+            auto baseColor = (unsigned char) (255 * complexity * distance_fade);
             int p = (int) (row * 4 * WIDTH + 4 * col);
-            pixels[p++] = (unsigned char) (255 * baseColor);
-            pixels[p++] = (unsigned char) (255 * baseColor);
-            pixels[p++] = (unsigned char) (255 * baseColor);
+            pixels[p++] = baseColor;
+            pixels[p++] = baseColor;
+            pixels[p++] = baseColor;
             pixels[p++] = 255;
             return;
         }
@@ -109,8 +85,8 @@ __host__ void camera::render() const {
     cudaMallocManaged(&pixels, (int) (WIDTH * HEIGHT * 4) * sizeof(unsigned char));
 
     // Create threads
-    cast_ray<<<4096, 1024>>>(pixels, shape, VIEW_WIDTH, VIEW_HEIGHT, WIDTH, HEIGHT, CANVAS_OFFSET,
-                             1.25, -2, -2.25,
+    cast_ray<<<262144, 64>>>(pixels, shape, VIEW_WIDTH, VIEW_HEIGHT, WIDTH, HEIGHT, CANVAS_OFFSET,
+                             0, 0, -10.1000,
                              MAX_DISTANCE, MAX_ITER, THRESHOLD, WORLD_SIZE);
     cudaDeviceSynchronize();
 
