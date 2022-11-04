@@ -1,7 +1,7 @@
 # ray-march-fractals-cuda
-Ray marcher implementation to render fractals in c++ with CUDA. This program is currently in development
-and only supports the Mandelbox and primitives.
+An exploratoin program to render the Mandelbox using a ray marching algorithm. Coded with C++ and CUDA to minimize render times
 
+## Demo Images
 ![Demo Image 1](out4.png)
 ![Demo Image 2](out2.png)
 ![Demo Image 3](out5.png)
